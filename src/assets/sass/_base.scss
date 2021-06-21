@@ -1,0 +1,56 @@
+* {
+  font-family: $font !important;
+  scroll-behavior: smooth !important;
+  box-sizing: inherit !important;
+
+  &:before,
+  &:after {
+    box-sizing: inherit !important;
+  }
+}
+
+html {
+  box-sizing: border-box !important;
+}
+
+.v-application {
+  color: $text !important;
+  margin: 0 15px;
+  font-size: 1.1rem !important;
+
+  button {
+    text-transform: initial !important;
+    background: $text !important;
+    font-size: 1.1rem !important;
+  }
+
+  .v-main {
+    background: $background !important;
+
+    .v-btn {
+      background: $button !important;
+      color: #fff !important;
+      border-radius: 10px;
+    }
+
+    .v-card .v-btn {
+      background: transparent !important;
+      color: $button !important;
+      box-shadow: none;
+      margin-top: 5px;
+    }
+
+    .v-image {
+      border-radius: 10px !important;
+    }
+  }
+
+  .v-footer {
+    background: $primary !important;
+    color: $text !important;
+
+    .v-icon {
+      color: $text;
+    }
+  }
+}
