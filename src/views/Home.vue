@@ -53,11 +53,5 @@
         window.scrollTo(0, 0);
       },
     },
-
-    created() {
-      if (this.$router.currentRoute.path === '/') {
-        this.$store.dispatch('loadJobs');
-      }
-    },
   };
 </script>

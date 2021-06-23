@@ -8,6 +8,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     jobs: [],
+    savedJobs: [],
     clickedJob: '',
     hideUSonly: false,
     jobsShown: 10,
@@ -21,6 +22,14 @@ export default new Vuex.Store({
     SET_CLICKED_JOB(state, payload) {
       state.clickedJob = payload;
     },
+    SET_SAVED_JOB(state, payload) {
+      state.savedJobs.push(payload);
+    },
+    REMOVE_SAVED_JOB(state, payload) {
+      const index = state.savedJobs.findIndex(element => element.id === payload.id);
+
+      state.savedJobs.splice(index, 1);
+    },
   },
   actions: {
     loadJobs({ commit }) {
@@ -30,6 +39,14 @@ export default new Vuex.Store({
           const jobs = [];
 
           response.data.jobs.forEach(element => {
+            let bookmarked;
+
+            if (this.state.savedJobs.some(savedJob => savedJob.id === element.id)) {
+              bookmarked = true;
+            } else {
+              bookmarked = false;
+            }
+
             jobs.push({
               id: element.id,
               companyName: element.company_name,
@@ -41,6 +58,7 @@ export default new Vuex.Store({
               jobURL: element.url,
               imgURL: `https://remotive.io/web/image/hr.job/${element.id}/logo/64x64`,
               jobDescription: element.description,
+              bookmarked: bookmarked,
             });
           });
 
@@ -54,11 +72,17 @@ export default new Vuex.Store({
         .then(response => {
           const jobs = [];
 
-          console.log(response.data);
-
           response.data.jobs
             .filter(element => element.category === 'Software Development')
             .forEach(element => {
+              let bookmarked;
+
+              if (this.state.savedJobs.some(savedJob => savedJob.id === element.id)) {
+                bookmarked = true;
+              } else {
+                bookmarked = false;
+              }
+
               jobs.push({
                 id: element.id,
                 companyName: element.company_name,
@@ -70,6 +94,7 @@ export default new Vuex.Store({
                 jobURL: element.url,
                 imgURL: `https://remotive.io/web/image/hr.job/${element.id}/logo/64x64`,
                 jobDescription: element.description,
+                bookmarked: bookmarked,
               });
             });
 
@@ -81,6 +106,12 @@ export default new Vuex.Store({
     openJobModal({ commit }, payload) {
       commit('SET_CLICKED_JOB', payload);
     },
+    saveJob({ commit }, payload) {
+      commit('SET_SAVED_JOB', payload);
+    },
+    removeSavedJob({ commit }, payload) {
+      commit('REMOVE_SAVED_JOB', payload);
+    },
   },
   getters: {
     jobs(state) {
@@ -91,6 +122,9 @@ export default new Vuex.Store({
     },
     clickedJob(state) {
       return state.clickedJob;
+    },
+    savedJobs(state) {
+      return state.savedJobs;
     },
   },
 });

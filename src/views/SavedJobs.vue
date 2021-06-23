@@ -1,6 +1,13 @@
 <template>
-  <h1>Saved Jobs</h1>
+  <div>
+    <JobResult></JobResult>
+    <JobModal></JobModal>
+  </div>
 </template>
 <script>
-  export default {};
+  import JobModal from '../components/Jobs/JobModal.vue';
+  import JobResult from '../components/Jobs/JobResult.vue';
+  export default {
+    components: { JobResult, JobModal },
+  };
 </script>

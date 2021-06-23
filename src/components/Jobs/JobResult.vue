@@ -24,8 +24,10 @@
           </div>
 
           <v-card-actions>
-            <v-btn>
-              <v-icon size="30">mdi-bookmark-outline</v-icon>
+            <v-btn @click="controlSavedJobs(job)">
+              <v-icon size="30">
+                {{ job.bookmarked === true ? 'mdi-bookmark' : 'mdi-bookmark-outline' }}</v-icon
+              >
             </v-btn>
 
             <v-card-subtitle>{{ formatDate(new Date(job.publicationDate)) }}</v-card-subtitle>
@@ -43,6 +45,10 @@
   export default {
     computed: {
       jobs() {
+        if (this.$router.currentRoute.path === '/saved-jobs') {
+          return this.$store.getters.savedJobs;
+        }
+
         if (this.$store.state.hideUSonly) {
           return this.$store.getters.filteredJobs.slice(0, this.$store.state.jobsShown);
         }
@@ -65,9 +71,29 @@
       },
       openJobModal(clickedJob) {
         this.$store.state.dialog = true;
-        const job = this.jobs.find(element => element.id === clickedJob.id);
+        console.log(clickedJob);
 
-        this.$store.dispatch('openJobModal', job);
+        this.$store.dispatch('openJobModal', clickedJob);
+      },
+      saveJob(savedJob) {
+        const job = savedJob;
+        job.bookmarked = true;
+
+        this.$store.dispatch('saveJob', job);
+      },
+      removeSavedJob(savedJob) {
+        const job = savedJob;
+
+        job.bookmarked = false;
+
+        this.$store.dispatch('removeSavedJob', job);
+      },
+      controlSavedJobs(savedJob) {
+        if (!savedJob.bookmarked) {
+          this.saveJob(savedJob);
+        } else {
+          this.removeSavedJob(savedJob);
+        }
       },
     },
   };
