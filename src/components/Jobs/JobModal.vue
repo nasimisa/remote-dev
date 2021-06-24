@@ -1,8 +1,5 @@
 <template>
   <v-row justify="center">
-    <!-- <v-btn @click.stop="dialog = true">
-      Open Dialog
-    </v-btn> -->
     <v-dialog
       v-model="$store.state.dialog"
       scrollable

@@ -2,7 +2,7 @@
   <div>
     <TheHero />
     <JobSearchBar />
-    <JobResults />
+    <JobResults class="animate__animated animate__fadeInDown animate__delay-3s" />
     <br />
     <JobModal />
     <v-btn

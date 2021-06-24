@@ -26,10 +26,6 @@
       TheFooter,
     },
     name: 'App',
-
-    data: () => ({
-      //
-    }),
   };
 </script>
 
