@@ -3,7 +3,7 @@
     <h1 v-if="$store.getters.appliedJobs.length === 0" class="text-center">
       No jobs applied, find the job you want and apply
     </h1>
-    <JobResult></JobResult>
+    <JobResult class="animate__animated animate__bounceInLeft"></JobResult>
     <JobModal></JobModal>
   </div>
 </template>

@@ -9,7 +9,7 @@
           shaped
           autofocus
           prepend-inner-icon="mdi-magnify"
-          class="mt-5"
+          class="mt-5 animate__animated animate__fadeInDown animate__delay-2s"
           color="#edb92a"
           v-model="$store.state.searchQuery"
         ></v-text-field>

@@ -12,7 +12,7 @@
       </v-row>
     </v-banner>
 
-    <JobResult ref="JobResult" />
+    <JobResult />
 
     <h1 v-if="numberOfJobs === 0" class="text-center">
       No Jobs found, please try with another keyword or Reload the page

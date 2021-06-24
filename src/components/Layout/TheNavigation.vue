@@ -5,7 +5,7 @@
         <router-link to="/" style="cursor:pointer">
           <v-img
             alt="Logo"
-            class="shrink mr-2 rounded-circle"
+            class="shrink mr-2 rounded-circle animate__animated animate__bounce"
             contain
             src="../../assets/logo.png"
             width="100"
