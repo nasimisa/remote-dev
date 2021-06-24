@@ -32,8 +32,13 @@
         <v-card-text v-html="clickedJob.jobDescription" class="mt-2 text-justify"></v-card-text>
         <v-divider></v-divider>
         <v-card-actions class="d-flex justify-center">
-          <v-btn>
-            <a :href="clickedJob.jobURL" target="_blank">Apply</a>
+          <v-btn v-if="clickedJob.applied === false">
+            <a :href="clickedJob.jobURL" target="_blank" @click="saveAppliedJob(clickedJob)"
+              >Apply</a
+            >
+          </v-btn>
+          <v-btn v-else-if="clickedJob.applied === true" disabled>
+            Applied
           </v-btn>
         </v-card-actions>
       </v-card>
@@ -48,10 +53,18 @@
         return this.$store.getters.clickedJob;
       },
     },
+    methods: {
+      saveAppliedJob(clickedJob) {
+        clickedJob.applied = true;
+        this.$store.state.dialog = false;
+
+        this.$store.dispatch('saveAppliedJob', clickedJob);
+      },
+    },
   };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
   .v-card {
     .v-btn {
       background: $button !important;
@@ -60,8 +73,8 @@
     }
 
     a {
-      text-decoration: none;
-      color: inherit;
+      text-decoration: none !important;
+      color: inherit !important;
     }
 
     &__header {
@@ -82,6 +95,10 @@
       ul {
         font-size: 1.03rem;
         text-align: justify;
+      }
+
+      img {
+        max-width: 350px !important;
       }
     }
   }

@@ -24,14 +24,20 @@
           </div>
 
           <v-card-actions>
-            <v-btn @click="controlSavedJobs(job)">
+            <v-btn
+              @click="controlSavedJobs(job)"
+              v-if="$router.currentRoute.path !== '/applied-jobs'"
+            >
               <v-icon size="30">
                 {{ job.bookmarked === true ? 'mdi-bookmark' : 'mdi-bookmark-outline' }}</v-icon
               >
             </v-btn>
 
             <v-card-subtitle>{{ formatDate(new Date(job.publicationDate)) }}</v-card-subtitle>
-            <v-btn v-if="$router.currentRoute.path === '/applied-jobs'">
+            <v-btn
+              v-if="$router.currentRoute.path === '/applied-jobs'"
+              @click="removeAppliedJob(job)"
+            >
               <v-icon size="30">mdi-trash-can</v-icon>
             </v-btn>
           </v-card-actions>
@@ -47,6 +53,10 @@
       jobs() {
         if (this.$router.currentRoute.path === '/saved-jobs') {
           return this.$store.getters.savedJobs;
+        }
+
+        if (this.$router.currentRoute.path === '/applied-jobs') {
+          return this.$store.getters.appliedJobs;
         }
 
         if (this.$store.state.hideUSonly) {
@@ -71,7 +81,6 @@
       },
       openJobModal(clickedJob) {
         this.$store.state.dialog = true;
-        console.log(clickedJob);
 
         this.$store.dispatch('openJobModal', clickedJob);
       },
@@ -94,6 +103,13 @@
         } else {
           this.removeSavedJob(savedJob);
         }
+      },
+      removeAppliedJob(appliedJob) {
+        const job = appliedJob;
+
+        job.applied = false;
+
+        this.$store.dispatch('removeAppliedJob', job);
       },
     },
   };

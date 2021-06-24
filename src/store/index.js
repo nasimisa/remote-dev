@@ -9,6 +9,7 @@ export default new Vuex.Store({
   state: {
     jobs: [],
     savedJobs: [],
+    appliedJobs: [],
     clickedJob: '',
     hideUSonly: false,
     jobsShown: 10,
@@ -37,6 +38,21 @@ export default new Vuex.Store({
 
       localStorage.setItem('savedJobs', JSON.stringify(state.savedJobs));
     },
+    SET_APPLIED_JOB(state, payload) {
+      state.appliedJobs.push(payload);
+
+      localStorage.setItem('appliedJobs', JSON.stringify(state.appliedJobs));
+    },
+    LOAD_APPLIED_JOBS(state, payload) {
+      state.appliedJobs = payload;
+    },
+    REMOVE_APPLIED_JOB(state, payload) {
+      const index = state.appliedJobs.findIndex(element => element.id === payload.id);
+
+      state.appliedJobs.splice(index, 1);
+
+      localStorage.setItem('appliedJobs', JSON.stringify(state.appliedJobs));
+    },
   },
   actions: {
     loadSavedJobs({ commit }) {
@@ -44,6 +60,13 @@ export default new Vuex.Store({
 
       if (storage) {
         commit('LOAD_SAVED_JOBS', JSON.parse(storage));
+      }
+    },
+    loadAppliedJobs({ commit }) {
+      const storage = localStorage.getItem('appliedJobs');
+
+      if (storage) {
+        commit('LOAD_APPLIED_JOBS', JSON.parse(storage));
       }
     },
     loadJobs({ commit }) {
@@ -54,11 +77,18 @@ export default new Vuex.Store({
 
           response.data.jobs.forEach(element => {
             let bookmarked;
+            let applied;
 
             if (this.state.savedJobs.some(savedJob => savedJob.id === element.id)) {
               bookmarked = true;
             } else {
               bookmarked = false;
+            }
+
+            if (this.state.appliedJobs.some(appliedJob => appliedJob.id === element.id)) {
+              applied = true;
+            } else {
+              applied = false;
             }
 
             jobs.push({
@@ -73,6 +103,7 @@ export default new Vuex.Store({
               imgURL: `https://remotive.io/web/image/hr.job/${element.id}/logo/64x64`,
               jobDescription: element.description,
               bookmarked: bookmarked,
+              applied: applied,
             });
           });
 
@@ -126,6 +157,12 @@ export default new Vuex.Store({
     removeSavedJob({ commit }, payload) {
       commit('REMOVE_SAVED_JOB', payload);
     },
+    saveAppliedJob({ commit }, payload) {
+      commit('SET_APPLIED_JOB', payload);
+    },
+    removeAppliedJob({ commit }, payload) {
+      commit('REMOVE_APPLIED_JOB', payload);
+    },
   },
   getters: {
     jobs(state) {
@@ -141,6 +178,9 @@ export default new Vuex.Store({
     },
     savedJobs(state) {
       return state.savedJobs;
+    },
+    appliedJobs(state) {
+      return state.appliedJobs;
     },
   },
 });
