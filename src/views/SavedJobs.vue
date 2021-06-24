@@ -1,5 +1,8 @@
 <template>
   <div>
+    <h1 v-if="$store.getters.savedJobs.length === 0" class="text-center">
+      No Jobs saved, find the job you want and bookmark it
+    </h1>
     <JobResult></JobResult>
     <JobModal></JobModal>
   </div>

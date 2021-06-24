@@ -14,8 +14,8 @@
 
     <JobResult ref="JobResult" />
 
-    <h1 v-if="$store.state.jobs.length === 0" class="text-center">
-      No Jobs found, please try with another keyword
+    <h1 v-if="numberOfJobs === 0" class="text-center">
+      No Jobs found, please try with another keyword or Reload the page
     </h1>
 
     <div class="text-center">
