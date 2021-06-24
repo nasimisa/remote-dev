@@ -12,6 +12,7 @@ new Vue({
   vuetify,
   render: h => h(App),
   created() {
+    this.$store.dispatch('loadSavedJobs');
     this.$store.dispatch('loadJobs');
   },
 }).$mount('#app');

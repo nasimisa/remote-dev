@@ -24,14 +24,28 @@ export default new Vuex.Store({
     },
     SET_SAVED_JOB(state, payload) {
       state.savedJobs.push(payload);
+
+      localStorage.setItem('savedJobs', JSON.stringify(state.savedJobs));
+    },
+    LOAD_SAVED_JOBS(state, payload) {
+      state.savedJobs = payload;
     },
     REMOVE_SAVED_JOB(state, payload) {
       const index = state.savedJobs.findIndex(element => element.id === payload.id);
 
       state.savedJobs.splice(index, 1);
+
+      localStorage.setItem('savedJobs', JSON.stringify(state.savedJobs));
     },
   },
   actions: {
+    loadSavedJobs({ commit }) {
+      const storage = localStorage.getItem('savedJobs');
+
+      if (storage) {
+        commit('LOAD_SAVED_JOBS', JSON.parse(storage));
+      }
+    },
     loadJobs({ commit }) {
       axios
         .get('https://remotive.io/api/remote-jobs?category=software-dev')
@@ -118,7 +132,9 @@ export default new Vuex.Store({
       return state.jobs;
     },
     filteredJobs(state) {
-      return state.jobs.filter(element => element.requiredLocation !== 'USA Only');
+      return state.jobs.filter(
+        element => element.requiredLocation !== 'USA Only' && element.requiredLocation !== 'US only'
+      );
     },
     clickedJob(state) {
       return state.clickedJob;
