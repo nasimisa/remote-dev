@@ -4,7 +4,7 @@
     max-height="520px"
     src="../../assets/images/student-849828_1280.jpg"
   >
-    <v-card-title>Find Your Remote Developer Job !</v-card-title>
+    <v-card-title class="text-center">Find Your Remote Developer Job !</v-card-title>
   </v-img>
 </template>
 
