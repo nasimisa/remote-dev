@@ -118,5 +118,15 @@
 <style lang="scss" scoped>
   .v-card {
     border: 2px solid $primary;
+
+    @media (max-width: 400px) {
+      &__title {
+        font-size: 0.8rem;
+      }
+
+      &__subtitle {
+        font-size: 0.7rem;
+      }
+    }
   }
 </style>

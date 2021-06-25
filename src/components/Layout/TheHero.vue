@@ -15,6 +15,11 @@
 <style lang="scss" scoped>
   .v-card__title {
     background: rgba(0, 0, 0, 0.5) !important;
-    font-size: 1rem;
+  }
+
+  @media (max-width: 400px) {
+    .v-card__title {
+      font-size: 0.8rem;
+    }
   }
 </style>
