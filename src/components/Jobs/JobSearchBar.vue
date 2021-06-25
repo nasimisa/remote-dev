@@ -7,7 +7,6 @@
           outlined
           solo
           shaped
-          autofocus
           prepend-inner-icon="mdi-magnify"
           class="mt-5 animate__animated animate__fadeInDown animate__delay-2s"
           color="#edb92a"
